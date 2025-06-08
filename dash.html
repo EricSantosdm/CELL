@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Provas</title>
+    <title>Dashboard de Provas com Filtros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
             --filosofico: #4e73df;
@@ -124,6 +125,55 @@
             font-size: 1.5rem;
             color: #4e73df;
         }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 0.35rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reset-filters {
+            margin-top: 1.5rem;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box i {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #6c757d;
+        }
+        
+        .search-box input {
+            padding-left: 35px;
+        }
+        
+        .active-filter {
+            background-color: #e9ecef;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+        
+        .active-filter i {
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -155,71 +205,89 @@
         </div>
 
         <div class="container">
-            <!-- Cards de Estatísticas -->
+            <!-- Seção de Filtros e Pesquisa -->
             <div class="row mb-4">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card filosofico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Filosóficas</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="filosoficos-count">0</div>
+                <div class="col-md-12">
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5><i class="bi bi-funnel"></i> Filtros</h5>
+                                <div class="row">
+                                    <div class="col-md-4 filter-group">
+                                        <div class="filter-label">Categoria</div>
+                                        <select class="form-select form-select-sm" id="filter-categoria">
+                                            <option value="">Todas</option>
+                                            <option value="Filosóficos">Filosóficos</option>
+                                            <option value="Históricos">Históricos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 filter-group">
+                                        <div class="filter-label">Criticidade</div>
+                                        <select class="form-select form-select-sm" id="filter-criticidade">
+                                            <option value="">Todas</option>
+                                            <option value="Crítico">Crítico</option>
+                                            <option value="Normal">Normal</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 filter-group">
+                                        <div class="filter-label">Status</div>
+                                        <select class="form-select form-select-sm" id="filter-status">
+                                            <option value="">Todos</option>
+                                            <option value="Avaliação Parcial">Avaliação Parcial</option>
+                                            <option value="Avaliação Iniciada">Avaliação Iniciada</option>
+                                            <option value="Pendente">Pendente</option>
+                                            <option value="Concluída">Concluída</option>
+                                            <option value="Em Análise">Em Análise</option>
+                                            <option value="Atrasada">Atrasada</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-book fa-2x text-gray-300"></i>
+                                <div class="row">
+                                    <div class="col-md-6 filter-group">
+                                        <div class="filter-label">Dia da Semana</div>
+                                        <select class="form-select form-select-sm" id="filter-dia">
+                                            <option value="">Todos</option>
+                                            <option value="Domingo">Domingo</option>
+                                            <option value="Segunda">Segunda</option>
+                                            <option value="Terça">Terça</option>
+                                            <option value="Quarta">Quarta</option>
+                                            <option value="Quinta">Quinta</option>
+                                            <option value="Sexta">Sexta</option>
+                                            <option value="Sábado">Sábado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 filter-group">
+                                        <div class="filter-label">Tipo</div>
+                                        <select class="form-select form-select-sm" id="filter-tipo">
+                                            <option value="">Todos</option>
+                                            <option value="normal">Normal</option>
+                                            <option value="excelencia">Excelência</option>
+                                        </select>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="bi bi-search"></i> Pesquisa</h5>
+                                <div class="search-box">
+                                    <i class="bi bi-search"></i>
+                                    <input type="text" class="form-control" id="search-input" placeholder="Pesquisar por curso, corretor ou código...">
+                                </div>
+                                <div class="mt-3">
+                                    <div class="filter-label">Filtros Ativos:</div>
+                                    <div id="active-filters"></div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-secondary reset-filters" id="reset-filters">
+                                    <i class="bi bi-x-circle"></i> Limpar Filtros
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card historico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Históricas</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="historicos-count">0</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-landmark fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card critico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Situação Crítica</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="criticos-count">0</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card normal-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas no Prazo</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="normais-count">0</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+
+            <!-- Cards de Estatísticas -->
+            <div class="row mb-4" id="stats-cards">
+                <!-- Cards serão atualizados dinamicamente -->
             </div>
 
             <!-- Gráficos -->
@@ -227,8 +295,9 @@
                 <!-- Gráfico de Provas por Dia -->
                 <div class="col-lg-8">
                     <div class="card">
-                        <div class="card-header">
-                            Provas por Dia da Semana
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Provas por Dia da Semana</span>
+                            <small class="text-muted" id="chart-subtitle"></small>
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
@@ -257,8 +326,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            Detalhes das Provas
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Detalhes das Provas</span>
+                            <small class="text-muted" id="table-count">Mostrando 0 de 0 provas</small>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -304,6 +374,9 @@
     <script>
         // Variável global para armazenar os dados das provas
         let dadosProvas = [];
+        let filteredData = [];
+        let provasPorDiaChart = null;
+        let categoriasChart = null;
 
         // Atualizar data atual
         function updateCurrentDate() {
@@ -328,7 +401,6 @@
                 return dadosProvas;
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
-                // Mostrar mensagem de erro para o usuário
                 document.getElementById('loading').innerHTML = `
                     <div class="alert alert-danger">
                         <i class="fas fa-exclamation-triangle me-2"></i>
@@ -349,7 +421,7 @@
         // Função para determinar criticidade
         function determinarCriticidade(tempo) {
             const dias = parseInt(tempo);
-            return dias >= 12 ? "Crítico" : "Normal";
+            return dias > 12 ? "Crítico" : "Normal";
         }
 
         // Função para determinar o dia da semana
@@ -410,95 +482,298 @@
                 prova.diaSemana = dia;
             });
             
-            // Atualizar cards de estatísticas
-            document.getElementById('filosoficos-count').textContent = filosoficos;
-            document.getElementById('historicos-count').textContent = historicos;
-            document.getElementById('criticos-count').textContent = criticos;
-            document.getElementById('normais-count').textContent = normais;
-            
             return {
                 filosoficos,
                 historicos,
                 criticos,
                 normais,
-                provasPorDia
+                provasPorDia,
+                total: dados.length
             };
         }
 
-        // Inicializar gráficos
-        function initCharts(data) {
-            // Gráfico de provas por dia
-            const ctxDia = document.getElementById('provasPorDiaChart').getContext('2d');
-            new Chart(ctxDia, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(data.provasPorDia),
-                    datasets: [{
-                        label: 'Provas por Dia',
-                        data: Object.values(data.provasPorDia),
-                        backgroundColor: [
-                            '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
-                            '#e74a3b', '#858796', '#5a5c69'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Distribuição de Provas por Dia da Semana'
-                        }
-                    }
+        // Aplicar filtros
+        function aplicarFiltros() {
+            const categoria = document.getElementById('filter-categoria').value;
+            const criticidade = document.getElementById('filter-criticidade').value;
+            const status = document.getElementById('filter-status').value;
+            const dia = document.getElementById('filter-dia').value;
+            const tipo = document.getElementById('filter-tipo').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            filteredData = dadosProvas.filter(prova => {
+                // Aplicar filtros de seleção
+                if (categoria && prova.categoria !== categoria) return false;
+                if (criticidade && prova.criticidade !== criticidade) return false;
+                if (status && prova.status !== status) return false;
+                if (dia && prova.diaSemana !== dia) return false;
+                if (tipo && prova.tipo !== tipo) return false;
+                
+                // Aplicar pesquisa
+                if (searchTerm) {
+                    const matchesCurso = prova.curso.toLowerCase().includes(searchTerm);
+                    const matchesCorretor = prova.corretor.toLowerCase().includes(searchTerm);
+                    const matchesCod = prova.cod.toLowerCase().includes(searchTerm);
+                    
+                    if (!matchesCurso && !matchesCorretor && !matchesCod) return false;
                 }
+                
+                return true;
             });
             
-            // Gráfico de pizza por categoria
-            const ctxCategoria = document.getElementById('categoriasChart').getContext('2d');
-            new Chart(ctxCategoria, {
-                type: 'pie',
-                data: {
-                    labels: ['Filosóficos', 'Históricos'],
-                    datasets: [{
-                        data: [data.filosoficos, data.historicos],
-                        backgroundColor: ['#4e73df', '#1cc88a'],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
+            // Atualizar interface
+            atualizarFiltrosAtivos();
+            atualizarDashboard();
+        }
+
+        // Atualizar filtros ativos
+        function atualizarFiltrosAtivos() {
+            const activeFilters = document.getElementById('active-filters');
+            activeFilters.innerHTML = '';
+            
+            const categoria = document.getElementById('filter-categoria').value;
+            const criticidade = document.getElementById('filter-criticidade').value;
+            const status = document.getElementById('filter-status').value;
+            const dia = document.getElementById('filter-dia').value;
+            const tipo = document.getElementById('filter-tipo').value;
+            const searchTerm = document.getElementById('search-input').value;
+            
+            if (categoria) {
+                addActiveFilter('Categoria: ' + categoria, 'filter-categoria');
+            }
+            if (criticidade) {
+                addActiveFilter('Criticidade: ' + criticidade, 'filter-criticidade');
+            }
+            if (status) {
+                addActiveFilter('Status: ' + status, 'filter-status');
+            }
+            if (dia) {
+                addActiveFilter('Dia: ' + dia, 'filter-dia');
+            }
+            if (tipo) {
+                addActiveFilter('Tipo: ' + tipo, 'filter-tipo');
+            }
+            if (searchTerm) {
+                addActiveFilter('Pesquisa: "' + searchTerm + '"', 'search-input');
+            }
+            
+            if (activeFilters.innerHTML === '') {
+                activeFilters.innerHTML = '<span class="text-muted">Nenhum filtro aplicado</span>';
+            }
+        }
+
+        // Adicionar filtro ativo
+        function addActiveFilter(text, filterId) {
+            const activeFilters = document.getElementById('active-filters');
+            const filterElement = document.createElement('div');
+            filterElement.className = 'active-filter';
+            filterElement.innerHTML = `
+                ${text}
+                <i class="bi bi-x" data-filter="${filterId}"></i>
+            `;
+            activeFilters.appendChild(filterElement);
+            
+            // Adicionar evento de clique para remover o filtro
+            filterElement.querySelector('i').addEventListener('click', function() {
+                document.getElementById(filterId).value = '';
+                aplicarFiltros();
+            });
+        }
+
+        // Atualizar todo o dashboard com os dados filtrados
+        function atualizarDashboard() {
+            const processedData = processarDados(filteredData);
+            
+            // Atualizar cards de estatísticas
+            atualizarCardsEstatisticas(processedData);
+            
+            // Atualizar gráficos
+            atualizarGraficos(processedData);
+            
+            // Atualizar tabela
+            preencherTabela(filteredData);
+            
+            // Atualizar contagem
+            document.getElementById('table-count').textContent = 
+                `Mostrando ${filteredData.length} de ${dadosProvas.length} provas`;
+                
+            // Atualizar subtítulo do gráfico
+            const subtitle = document.getElementById('chart-subtitle');
+            if (filteredData.length < dadosProvas.length) {
+                subtitle.textContent = `Filtrado: ${filteredData.length} provas`;
+                subtitle.style.display = 'block';
+            } else {
+                subtitle.style.display = 'none';
+            }
+        }
+
+        // Atualizar cards de estatísticas
+        function atualizarCardsEstatisticas(data) {
+            const statsContainer = document.getElementById('stats-cards');
+            
+            statsContainer.innerHTML = `
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card filosofico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Filosóficas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.filosoficos}</div>
+                                    <div class="mt-2 text-xs text-muted">
+                                        ${Math.round((data.filosoficos / data.total) * 100)}% do total
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-book fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card historico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Históricas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.historicos}</div>
+                                    <div class="mt-2 text-xs text-muted">
+                                        ${Math.round((data.historicos / data.total) * 100)}% do total
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-landmark fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card critico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Situação Crítica</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.criticos}</div>
+                                    <div class="mt-2 text-xs text-muted">
+                                        ${Math.round((data.criticos / data.total) * 100)}% do total
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card normal-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas no Prazo</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.normais}</div>
+                                    <div class="mt-2 text-xs text-muted">
+                                        ${Math.round((data.normais / data.total) * 100)}% do total
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Atualizar gráficos
+        function atualizarGraficos(data) {
+            // Atualizar gráfico de provas por dia
+            if (provasPorDiaChart) {
+                provasPorDiaChart.data.datasets[0].data = Object.values(data.provasPorDia);
+                provasPorDiaChart.update();
+            } else {
+                const ctxDia = document.getElementById('provasPorDiaChart').getContext('2d');
+                provasPorDiaChart = new Chart(ctxDia, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.provasPorDia),
+                        datasets: [{
+                            label: 'Provas por Dia',
+                            data: Object.values(data.provasPorDia),
+                            backgroundColor: [
+                                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
+                                '#e74a3b', '#858796', '#5a5c69'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value} (${percentage}%)`;
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribuição de Provas por Dia da Semana'
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Atualizar gráfico de categorias
+            if (categoriasChart) {
+                categoriasChart.data.datasets[0].data = [data.filosoficos, data.historicos];
+                categoriasChart.update();
+            } else {
+                const ctxCategoria = document.getElementById('categoriasChart').getContext('2d');
+                categoriasChart = new Chart(ctxCategoria, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Filosóficos', 'Históricos'],
+                        datasets: [{
+                            data: [data.filosoficos, data.historicos],
+                            backgroundColor: ['#4e73df', '#1cc88a'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
         }
 
         // Preencher tabela
@@ -526,7 +801,7 @@
                         <div class="progress">
                             <div class="progress-bar ${critClass.replace('badge', 'bg')}" 
                                 role="progressbar" 
-                                style="width: ${parseInt(prova.tempo)/15*100}%" 
+                                style="width: ${(parseInt(prova.tempo)/15)*100}%" 
                                 aria-valuenow="${parseInt(prova.tempo)}" 
                                 aria-valuemin="0" 
                                 aria-valuemax="15">
@@ -544,6 +819,18 @@
             });
         }
 
+        // Limpar filtros
+        function limparFiltros() {
+            document.getElementById('filter-categoria').value = '';
+            document.getElementById('filter-criticidade').value = '';
+            document.getElementById('filter-status').value = '';
+            document.getElementById('filter-dia').value = '';
+            document.getElementById('filter-tipo').value = '';
+            document.getElementById('search-input').value = '';
+            
+            aplicarFiltros();
+        }
+
         // Inicializar dashboard
         document.addEventListener('DOMContentLoaded', async () => {
             updateCurrentDate();
@@ -552,10 +839,20 @@
             const dados = await carregarDados();
             
             if (dados.length > 0) {
+                // Inicializar dados filtrados
+                filteredData = [...dados];
+                
+                // Configurar eventos dos filtros
+                document.getElementById('filter-categoria').addEventListener('change', aplicarFiltros);
+                document.getElementById('filter-criticidade').addEventListener('change', aplicarFiltros);
+                document.getElementById('filter-status').addEventListener('change', aplicarFiltros);
+                document.getElementById('filter-dia').addEventListener('change', aplicarFiltros);
+                document.getElementById('filter-tipo').addEventListener('change', aplicarFiltros);
+                document.getElementById('search-input').addEventListener('input', aplicarFiltros);
+                document.getElementById('reset-filters').addEventListener('click', limparFiltros);
+                
                 // Processar e exibir dados
-                const processedData = processarDados(dados);
-                initCharts(processedData);
-                preencherTabela(dados);
+                atualizarDashboard();
                 
                 // Esconder loading e mostrar conteúdo
                 document.getElementById('loading').style.display = 'none';
