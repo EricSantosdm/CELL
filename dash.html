@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Provas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --filosofico: #4e73df;
+            --filosofico-light: #858796;
+            --historico: #1cc88a;
+            --historico-light: #36b9cc;
+            --critico: #e74a3b;
+            --normal: #36b9cc;
+            --header: #4e73df;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .card {
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+        
+        .card-header {
+            background-color: #f8f9fc;
+            border-bottom: 1px solid #e3e6f0;
+            padding: 0.75rem 1.25rem;
+            font-weight: 700;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--header) 0%, #2a3f9d 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.2);
+        }
+        
+        .stat-card {
+            border-left: 0.25rem solid;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .filosofico-card {
+            border-left-color: var(--filosofico);
+        }
+        
+        .historico-card {
+            border-left-color: var(--historico);
+        }
+        
+        .critico-card {
+            border-left-color: var(--critico);
+        }
+        
+        .normal-card {
+            border-left-color: var(--normal);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .table-responsive {
+            border-radius: 0.35rem;
+            overflow: hidden;
+        }
+        
+        .table th {
+            background-color: #4e73df;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .badge-filosofico {
+            background-color: var(--filosofico);
+        }
+        
+        .badge-historico {
+            background-color: var(--historico);
+        }
+        
+        .badge-critico {
+            background-color: var(--critico);
+        }
+        
+        .badge-normal {
+            background-color: var(--normal);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .status-badge {
+            padding: 0.5em 0.8em;
+            border-radius: 0.25rem;
+        }
+        
+        .progress {
+            height: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 1.5rem;
+            color: #4e73df;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de carregamento -->
+    <div id="loading" class="loading">
+        <div class="spinner-border me-2" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        Carregando dados...
+    </div>
+
+    <!-- Conteúdo principal (inicialmente oculto) -->
+    <div id="content" style="display: none;">
+        <!-- Header -->
+        <div class="header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1><i class="bi bi-clipboard-data"></i> Dashboard de Monitoramento de Provas</h1>
+                        <p class="lead">Acompanhamento de provas por categoria, criticidade e prazo</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="d-inline-block bg-white text-dark p-2 rounded">
+                            <span id="current-date"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Cards de Estatísticas -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card filosofico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Filosóficas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="filosoficos-count">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-book fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card historico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Históricas</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="historicos-count">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-landmark fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card critico-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Situação Crítica</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="criticos-count">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stat-card normal-card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas no Prazo</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value" id="normais-count">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="row mb-4">
+                <!-- Gráfico de Provas por Dia -->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            Provas por Dia da Semana
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="provasPorDiaChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gráfico de Pizza por Categoria -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Distribuição por Categoria
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="categoriasChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Provas -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Detalhes das Provas
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="provasTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Curso</th>
+                                            <th>Código</th>
+                                            <th>Tempo</th>
+                                            <th>Categoria</th>
+                                            <th>Status</th>
+                                            <th>Criticidade</th>
+                                            <th>Corretor</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="provasTableBody">
+                                        <!-- Dados serão inseridos aqui via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer mt-5 py-4 bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 text-lg-start">Dashboard de Provas &copy; 2023</div>
+                    <div class="col-lg-6 text-lg-end">
+                        <span class="text-muted">Atualizado em: <span id="update-time"></span></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <script>
+        // Variável global para armazenar os dados das provas
+        let dadosProvas = [];
+
+        // Atualizar data atual
+        function updateCurrentDate() {
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('update-time').textContent = new Date().toLocaleTimeString('pt-BR');
+        }
+
+        // Função para carregar os dados do arquivo JSON
+        async function carregarDados() {
+            try {
+                const response = await fetch('dados.json');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os dados');
+                }
+                dadosProvas = await response.json();
+                return dadosProvas;
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                // Mostrar mensagem de erro para o usuário
+                document.getElementById('loading').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está acessível.
+                    </div>
+                `;
+                return [];
+            }
+        }
+
+        // Função para categorizar as provas
+        function categorizarProva(curso) {
+            return (curso === "Cavaleiro Anon" || curso === "Cavaleiro do Ébano") 
+                ? "Filosóficos" 
+                : "Históricos";
+        }
+
+        // Função para determinar criticidade
+        function determinarCriticidade(tempo) {
+            const dias = parseInt(tempo);
+            return dias >= 12 ? "Crítico" : "Normal";
+        }
+
+        // Função para determinar o dia da semana
+        function getDiaSemana(dias) {
+            const diasMap = {
+                0: "Domingo",
+                1: "Segunda",
+                2: "Terça",
+                3: "Quarta",
+                4: "Quinta",
+                5: "Sexta",
+                6: "Sábado"
+            };
+            
+            const hoje = new Date();
+            const vencimento = new Date(hoje);
+            vencimento.setDate(hoje.getDate() + (15 - parseInt(dias)));
+            return diasMap[vencimento.getDay()];
+        }
+
+        // Processar dados
+        function processarDados(dados) {
+            let filosoficos = 0;
+            let historicos = 0;
+            let criticos = 0;
+            let normais = 0;
+            
+            // Contagem por dia da semana
+            const provasPorDia = {
+                "Domingo": 0,
+                "Segunda": 0,
+                "Terça": 0,
+                "Quarta": 0,
+                "Quinta": 0,
+                "Sexta": 0,
+                "Sábado": 0
+            };
+            
+            // Processar cada prova
+            dados.forEach(prova => {
+                // Categorizar
+                const categoria = categorizarProva(prova.curso);
+                if (categoria === "Filosóficos") filosoficos++;
+                if (categoria === "Históricos") historicos++;
+                
+                // Criticidade
+                const criticidade = determinarCriticidade(prova.tempo);
+                if (criticidade === "Crítico") criticos++;
+                if (criticidade === "Normal") normais++;
+                
+                // Dia da semana
+                const dia = getDiaSemana(parseInt(prova.tempo));
+                provasPorDia[dia]++;
+                
+                // Adicionar propriedades processadas ao objeto
+                prova.categoria = categoria;
+                prova.criticidade = criticidade;
+                prova.diaSemana = dia;
+            });
+            
+            // Atualizar cards de estatísticas
+            document.getElementById('filosoficos-count').textContent = filosoficos;
+            document.getElementById('historicos-count').textContent = historicos;
+            document.getElementById('criticos-count').textContent = criticos;
+            document.getElementById('normais-count').textContent = normais;
+            
+            return {
+                filosoficos,
+                historicos,
+                criticos,
+                normais,
+                provasPorDia
+            };
+        }
+
+        // Inicializar gráficos
+        function initCharts(data) {
+            // Gráfico de provas por dia
+            const ctxDia = document.getElementById('provasPorDiaChart').getContext('2d');
+            new Chart(ctxDia, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data.provasPorDia),
+                    datasets: [{
+                        label: 'Provas por Dia',
+                        data: Object.values(data.provasPorDia),
+                        backgroundColor: [
+                            '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
+                            '#e74a3b', '#858796', '#5a5c69'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribuição de Provas por Dia da Semana'
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de pizza por categoria
+            const ctxCategoria = document.getElementById('categoriasChart').getContext('2d');
+            new Chart(ctxCategoria, {
+                type: 'pie',
+                data: {
+                    labels: ['Filosóficos', 'Históricos'],
+                    datasets: [{
+                        data: [data.filosoficos, data.historicos],
+                        backgroundColor: ['#4e73df', '#1cc88a'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Preencher tabela
+        function preencherTabela(dados) {
+            const tbody = document.getElementById('provasTableBody');
+            tbody.innerHTML = '';
+            
+            dados.forEach(prova => {
+                const row = document.createElement('tr');
+                
+                // Determinar classes de categoria e criticidade
+                const catClass = prova.categoria === "Filosóficos" 
+                    ? "badge-filosofico" 
+                    : "badge-historico";
+                    
+                const critClass = prova.criticidade === "Crítico" 
+                    ? "badge-critico" 
+                    : "badge-normal";
+                
+                row.innerHTML = `
+                    <td>${prova.curso}</td>
+                    <td><small>${prova.cod}</small></td>
+                    <td>
+                        <div>${prova.tempo}</div>
+                        <div class="progress">
+                            <div class="progress-bar ${critClass.replace('badge', 'bg')}" 
+                                role="progressbar" 
+                                style="width: ${parseInt(prova.tempo)/15*100}%" 
+                                aria-valuenow="${parseInt(prova.tempo)}" 
+                                aria-valuemin="0" 
+                                aria-valuemax="15">
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge ${catClass} status-badge">${prova.categoria}</span></td>
+                    <td>${prova.status}</td>
+                    <td><span class="badge ${critClass} status-badge">${prova.criticidade}</span></td>
+                    <td>${prova.corretor || 'Não atribuído'}</td>
+                    <td>${prova.tipo}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            updateCurrentDate();
+            
+            // Carregar dados do JSON
+            const dados = await carregarDados();
+            
+            if (dados.length > 0) {
+                // Processar e exibir dados
+                const processedData = processarDados(dados);
+                initCharts(processedData);
+                preencherTabela(dados);
+                
+                // Esconder loading e mostrar conteúdo
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

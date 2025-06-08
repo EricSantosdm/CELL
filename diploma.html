@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Diploma Técnico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+        
+        h1 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #b21f1f;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+        }
+        
+        .form-container {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .form-title {
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b21f1f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a2a6c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.2);
+        }
+        
+        .btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #0d1a4d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-print {
+            background: #b21f1f;
+        }
+        
+        .btn-print:hover {
+            background: #8a1818;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .diploma-container {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            /* Tamanho A4 Horizontal */
+            width: 297mm;
+            height: 210mm;
+            position: relative;
+        }
+        
+        .diploma-body {
+            padding: 20mm;
+            flex: 1;
+            background: #f9f6e9;
+            position: relative;
+            border: 15px solid #d4af37;
+            background-image: 
+                radial-gradient(#d4af37 1px, transparent 1px),
+                radial-gradient(#d4af37 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+        
+        .diploma-content {
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: rgba(249, 246, 233, 0.9);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .institution-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .institution-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a2a6c;
+            margin-bottom: 5px;
+        }
+        
+        .institution-details {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .diploma-title {
+            font-size: 44px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a2a6c;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diploma-subtitle {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #b21f1f;
+        }
+        
+        .diploma-text {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .student-name {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            border-top: 2px solid #d4af37;
+            border-bottom: 2px solid #d4af37;
+            color: #1a2a6c;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            align-items: flex-end;
+        }
+        
+        .signature {
+            text-align: center;
+            width: 30%;
+            position: relative;
+        }
+        
+        .signature-line {
+            height: 1px;
+            background: #333;
+            margin: 40px 0 10px;
+            position: relative;
+        }
+        
+        .signature-line:after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #333;
+        }
+        
+        .logo-container {
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            color: rgba(180, 180, 180, 0.1);
+            z-index: 1;
+            pointer-events: none;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+        }
+        
+        .diploma-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Estilo para o verso do diploma */
+        .verso-container {
+            display: none;
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            padding: 20mm;
+            position: relative;
+            border: 1px solid #ccc;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            background: #f9f6e9;
+            border: 15px solid #d4af37;
+        }
+        
+        .verso-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .verso-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #1a2a6c;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+        }
+        
+        .verso-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .verso-footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+        }
+        
+        .verso-logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .verso-logo .logo {
+            margin: 0 auto;
+        }
+        
+        .validation-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .validation-code {
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a2a6c;
+            letter-spacing: 2px;
+            margin: 15px 0;
+        }
+        
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 250px;
+            padding: 0 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a2a6c;
+        }
+        
+        .info-value {
+            padding: 8px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .diploma-container, .diploma-container *,
+            .verso-container, .verso-container * {
+                visibility: visible;
+            }
+            
+            .diploma-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 297mm;
+                height: 210mm;
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                page-break-after: always;
+            }
+            
+            .verso-container {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin-top: 210mm; /* Posiciona após o anverso */
+                page-break-before: always;
+            }
+            
+            .btn-container, .form-container, header, footer, .controls {
+                display: none;
+            }
+            
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .app-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .diploma-container {
+                width: 100%;
+                max-width: 297mm;
+                height: auto;
+                aspect-ratio: 297 / 210;
+            }
+            
+            .form-container {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .diploma-body {
+                padding: 10mm;
+            }
+            
+            .watermark {
+                font-size: 60px;
+            }
+            
+            .diploma-title {
+                font-size: 32px;
+            }
+            
+            .student-name {
+                font-size: 24px;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 12px;
+            }
+            
+            .student-info {
+                flex-direction: column;
+            }
+        }
+        
+        .preview-info {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .verso-preview {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .verso-preview h4 {
+            margin-bottom: 10px;
+            color: #1a2a6c;
+        }
+        
+        /* Máscara para CPF */
+        .cpf-mask {
+            display: flex;
+        }
+        
+        .cpf-mask input {
+            flex: 1;
+            margin-right: 5px;
+        }
+        
+        .cpf-mask span {
+            padding: 12px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-graduation-cap"></i> Gerador de Diploma Técnico</h1>
+            <p class="subtitle">Preencha o formulário para gerar seu diploma com frente e verso em A4 horizontal</p>
+        </header>
+        
+        <div class="app-container">
+            <div class="form-container">
+                <h2 class="form-title"><i class="fas fa-edit"></i> Dados do Diploma</h2>
+                
+                <div class="form-group">
+                    <label for="studentName"><i class="fas fa-user"></i> Nome Completo do Aluno:</label>
+                    <input type="text" id="studentName" placeholder="Digite o nome completo" value="Maria da Silva Oliveira">
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentCPF"><i class="fas fa-id-card"></i> CPF do Aluno:</label>
+                    <input type="text" id="studentCPF" placeholder="000.000.000-00" maxlength="14" value="123.456.789-00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="course"><i class="fas fa-graduation-cap"></i> Curso:</label>
+                    <select id="course">
+                        <option value="Técnico em Enfermagem">Técnico em Enfermagem</option>
+                        <option value="Técnico em Radiologia">Técnico em Radiologia</option>
+                        <option value="Técnico em Farmácia">Técnico em Farmácia</option>
+                        <option value="Técnico em Segurança do Trabalho">Técnico em Segurança do Trabalho</option>
+                        <option value="Técnico em Nutrição">Técnico em Nutrição</option>
+                        <option value="Técnico em Análises Clínicas">Técnico em Análises Clínicas</option>
+                        <option value="Técnico em Informática">Técnico em Informática</option>
+                        <option value="Técnico em Administração">Técnico em Administração</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="completionDay"><i class="fas fa-calendar-day"></i> Dia da Conclusão:</label>
+                    <input type="number" id="completionDay" min="1" max="31" placeholder="DD" value="15">
+                </div>
+                
+                <div class="form-group">
+                    <label for="completionMonth"><i class="fas fa-calendar-alt"></i> Mês da Conclusão:</label>
+                    <select id="completionMonth">
+                        <option value="Janeiro">Janeiro</option>
+                        <option value="Fevereiro">Fevereiro</option>
+                        <option value="Março" selected>Março</option>
+                        <option value="Abril">Abril</option>
+                        <option value="Maio">Maio</option>
+                        <option value="Junho">Junho</option>
+                        <option value="Julho">Julho</option>
+                        <option value="Agosto">Agosto</option>
+                        <option value="Setembro">Setembro</option>
+                        <option value="Outubro">Outubro</option>
+                        <option value="Novembro">Novembro</option>
+                        <option value="Dezembro">Dezembro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="completionYear"><i class="fas fa-calendar"></i> Ano da Conclusão:</label>
+                    <input type="number" id="completionYear" min="2000" max="2030" placeholder="AAAA" value="2025">
+                </div>
+                
+                <div class="form-group">
+                    <label for="directorName"><i class="fas fa-signature"></i> Nome da Diretora:</label>
+                    <input type="text" id="directorName" placeholder="Nome da diretora" value="Profª. Dra. Ana Lacerda Silva">
+                </div>
+                
+                <div class="form-group">
+                    <label for="sistecCode"><i class="fas fa-shield-alt"></i> Código SISTEC:</label>
+                    <input type="text" id="sistecCode" placeholder="Código de verificação" value="BR2025SP123456789">
+                </div>
+                
+                <div class="preview-info">
+                    <i class="fas fa-info-circle"></i> O diploma será gerado em formato A4 horizontal (frente e verso)
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn" onclick="generateDiploma()">
+                        <i class="fas fa-sync-alt"></i> Atualizar Diploma
+                    </button>
+                    <button class="btn btn-print" onclick="printDiploma()">
+                        <i class="fas fa-print"></i> Imprimir Diploma
+                    </button>
+                </div>
+                
+                <div class="verso-preview">
+                    <h4><i class="fas fa-file-alt"></i> Visualização do Verso:</h4>
+                    <p>O verso do diploma será gerado automaticamente com informações institucionais e autenticação.</p>
+                    <button class="btn" onclick="toggleVerso()" style="margin-top: 10px; background: #2e7d32;">
+                        <i class="fas fa-eye"></i> Visualizar Verso
+                    </button>
+                </div>
+            </div>
+            
+            <div class="diploma-container">
+                <div class="diploma-body">
+                    <div class="watermark">Diploma Oficial</div>
+                    
+                    <div class="diploma-content">
+                        <div>
+                            <div class="institution-header">
+                                <div class="institution-name">Centro Educacional Lacerda S/S Ltda.</div>
+                                <div class="institution-details">CNPJ: 12.345.678/0001-99 • Autorizado pela Portaria MEC nº 123/2020</div>
+                            </div>
+                            
+                            <div class="diploma-title">Diploma</div>
+                            <div class="diploma-subtitle" id="displayCourse">Técnico em Enfermagem</div>
+                            
+                            <p class="diploma-text">
+                                Centro Educacional Lacerda S/S Ltda., no uso de suas atribuições legais e, 
+                                de acordo com a Lei no 9.394/94 resolução no 04/99 e Parecer n 126/2022- CEC. 
+                                confere presente DIPLOMA a
+                            </p>
+                            
+                            <div class="student-name" id="displayName">Maria da Silva Oliveira</div>
+                            
+                            <p class="diploma-text">
+                                por ter concluído em <span id="displayDate">15 de Março de 2025</span> 
+                                o CURSO <span id="displayCourse2">TÉCNICO EM ENFERMAGEM</span>, com habilitação na área de saúde, 
+                                para que possa gozar de todos os direitos, regalias e prerrogativas 
+                                concedidas a ele(a), pelas leis do país.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="signatures">
+                                <div class="signature">
+                                    <div class="signature-line"></div>
+                                    <p>DIRETORA</p>
+                                    <p id="displayDirector">Profª. Dra. Ana Lacerda Silva</p>
+                                </div>
+                                
+                                <div class="logo-container">
+                                    <div class="logo">
+                                       <img class="logo" src="logo.png"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="signature">
+                                    <div class="signature-line"></div>
+                                    <p>CONCLUINTE</p>
+                                    <p id="displaySignature">Maria da Silva Oliveira</p>
+                                </div>
+                            </div>
+                            
+                            <div class="diploma-footer">
+                                Registro no livro nº 12345 • Folha 678 • Processo nº 2023.123.456
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="verso-container" id="versoContainer">
+            <div class="verso-content">
+                <div>
+                    <div class="verso-title">Autenticação do Diploma</div>
+                    
+                    <div class="verso-logo">
+                        <div class="logo">
+                            LOGO<br>INSTITUCIONAL
+                        </div>
+                    </div>
+                    
+                    <div class="student-info">
+                        <div class="info-item">
+                            <div class="info-label">Nome do Aluno:</div>
+                            <div class="info-value" id="versoName">Maria da Silva Oliveira</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">CPF:</div>
+                            <div class="info-value" id="versoCPF">123.456.789-00</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">Curso:</div>
+                            <div class="info-value" id="versoCourse">Técnico em Enfermagem</div>
+                        </div>
+                    </div>
+                    
+                    <div class="student-info">
+                        <div class="info-item">
+                            <div class="info-label">Data de Conclusão:</div>
+                            <div class="info-value" id="versoDate">15 de Março de 2025</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">Carga Horária:</div>
+                            <div class="info-value">1.200 horas</div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-label">Registro MEC:</div>
+                            <div class="info-value">12345.678/0001-99</div>
+                        </div>
+                    </div>
+                    
+                    <div class="validation-info">
+                        <p>Este diploma pode ser verificado através do sistema SISTEC do MEC</p>
+                        <p>Código de Validação:</p>
+                        <p class="validation-code" id="versoSistec">BR2025SP123456789</p>
+                        <p>Para validar: www.gov.br/sistec/validar-diploma</p>
+                    </div>
+                </div>
+                
+                <div class="verso-footer">
+                    Centro Educacional Lacerda S/S Ltda. • Av. Educacional, 1234 • São Paulo/SP<br>
+                    Telefone: (11) 3456-7890 • E-mail: contato@lacerda.edu.br<br>
+                    Sistema de Autenticação: www.lacerda.edu.br/validar-diploma
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="generateDiploma()">
+                <i class="fas fa-redo"></i> Atualizar Diploma
+            </button>
+            <button class="btn btn-print" onclick="printDiploma()">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+            <button class="btn" onclick="toggleVerso()" style="background: #2e7d32;">
+                <i class="fas fa-file-alt"></i> Visualizar Verso
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateDiploma() {
+            // Obter valores do formulário
+            const studentName = document.getElementById('studentName').value || 'Nome do Aluno';
+            const studentCPF = document.getElementById('studentCPF').value || '000.000.000-00';
+            const course = document.getElementById('course').value || 'Técnico em Enfermagem';
+            const day = document.getElementById('completionDay').value || 'xx';
+            const month = document.getElementById('completionMonth').value;
+            const year = document.getElementById('completionYear').value || '2025';
+            const directorName = document.getElementById('directorName').value || 'Diretora';
+            const sistecCode = document.getElementById('sistecCode').value || 'BR2025SP000000000';
+            
+            // Formatar a data
+            const formattedDate = `${day} de ${month} de ${year}`;
+            
+            // Atualizar o diploma (frente)
+            document.getElementById('displayName').textContent = studentName;
+            document.getElementById('displayDate').textContent = formattedDate;
+            document.getElementById('displaySignature').textContent = studentName;
+            document.getElementById('displayDirector').textContent = directorName;
+            document.getElementById('displayCourse').textContent = course;
+            document.getElementById('displayCourse2').textContent = course.toUpperCase();
+            
+            // Atualizar o verso
+            document.getElementById('versoName').textContent = studentName;
+            document.getElementById('versoCPF').textContent = studentCPF;
+            document.getElementById('versoCourse').textContent = course;
+            document.getElementById('versoDate').textContent = formattedDate;
+            document.getElementById('versoSistec').textContent = sistecCode;
+            
+            // Efeito de atualização
+            const diploma = document.querySelector('.diploma-container');
+            diploma.style.transform = 'scale(1.02)';
+            diploma.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+            setTimeout(() => {
+                diploma.style.transform = 'scale(1)';
+                diploma.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            }, 300);
+        }
+        
+        function printDiploma() {
+            window.print();
+        }
+        
+        function toggleVerso() {
+            const verso = document.getElementById('versoContainer');
+            if(verso.style.display === 'block') {
+                verso.style.display = 'none';
+            } else {
+                verso.style.display = 'block';
+                verso.scrollIntoView({behavior: 'smooth'});
+            }
+        }
+        
+        // Máscara para CPF
+        document.getElementById('studentCPF').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 3) {
+                value = value.substring(0, 3) + '.' + value.substring(3);
+            }
+            if (value.length > 7) {
+                value = value.substring(0, 7) + '.' + value.substring(7);
+            }
+            if (value.length > 11) {
+                value = value.substring(0, 11) + '-' + value.substring(11);
+            }
+            
+            e.target.value = value.substring(0, 14);
+        });
+        
+        // Gerar diploma inicial com valores padrão
+        window.onload = function() {
+            generateDiploma();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CELL - Centro Educacional Lacerda</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-escuro: #0d3b66;
+            --azul-medio: #1d6a96;
+            --azul-claro: #2d8dbf;
+            --azul-bem-claro: #a2d2ff;
+            --azul-fundo: #e6f2ff;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            padding-top: 70px; /* Espaço para o menu fixo */
+        }
+        
+        .navbar {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul-medio));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(13, 59, 102, 0.8), rgba(13, 59, 102, 0.9)), url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--azul-escuro);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--azul-claro), var(--azul-medio));
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .section-title.text-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+        
+        .courses-section {
+            background-color: var(--azul-fundo);
+            padding: 80px 0;
+        }
+        
+        .card-course {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+        
+        .card-course:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul-medio));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            margin: 15px 0;
+        }
+        
+        .btn-enroll {
+            background: linear-gradient(to right, var(--azul-claro), var(--azul-medio));
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn-enroll:hover {
+            background: linear-gradient(to right, var(--azul-medio), var(--azul-escuro));
+            transform: scale(1.05);
+        }
+        
+        .features-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--azul-claro);
+            margin-bottom: 20px;
+        }
+        
+        .testimonials-section {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul-medio));
+            padding: 80px 0;
+            color: white;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .contact-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+        
+        .contact-info {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul-medio));
+            color: white;
+            border-radius: 10px;
+            padding: 40px;
+            height: 100%;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--azul-bem-claro);
+        }
+        
+        .footer {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul-medio));
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--azul-bem-claro);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, var(--azul-claro), var(--azul-medio));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+        
+        .course-icon {
+            font-size: 2.5rem;
+            color: var(--azul-claro);
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            color: var(--azul-claro);
+            font-weight: 600;
+        }
+        
+        .location {
+            background-color: var(--azul-fundo);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Fixo -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>CELL
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cursos">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#diferenciais">Diferenciais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contato">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <h1 class="display-4 fw-bold mb-4">Centro Educacional Lacerda</h1>
+                    <p class="lead mb-5">Excelência em formação profissional na área da saúde</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="#cursos" class="btn btn-lg btn-light me-3 px-4 py-2">Nossos Cursos</a>
+                        <a href="#contato" class="btn btn-lg btn-outline-light px-4 py-2">Contato</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="section-title">Sobre o CELL</h2>
+                    <p class="lead">O Centro Educacional Lacerda é uma instituição de ensino comprometida com a formação de profissionais qualificados na área da saúde.</p>
+                    <p>Localizada em Mauriti-CE, temos como missão oferecer educação de qualidade, com foco na excelência acadêmica e no desenvolvimento humano.</p>
+                    <p>Nossos cursos são ministrados por profissionais experientes e renomados, com estrutura moderna e equipamentos atualizados para proporcionar a melhor experiência de aprendizagem.</p>
+                    <div class="location">
+                        <p><i class="fas fa-map-marker-alt highlight me-2"></i><strong>Mauriti-CE</strong></p>
+                        <p>Transformando vidas através da educação em saúde</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <h4>Corpo Docente</h4>
+                                <p>Professores especialistas, mestres e doutores com experiência de mercado.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h4>Infraestrutura</h4>
+                                <p>Laboratórios modernos e equipados com tecnologia de ponta.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4>Metodologia</h4>
+                                <p>Aprendizado prático e focado nas necessidades do mercado de trabalho.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h4>Empregabilidade</h4>
+                                <p>Parcerias com hospitais e clínicas para estágios e colocação profissional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos -->
+    <section id="cursos" class="courses-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Nossos Cursos</h2>
+            <p class="text-center mb-5 lead">Cursos técnicos e profissionalizantes para você se destacar na área da saúde</p>
+            
+            <div class="row">
+                <!-- Curso 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Técnico em Enfermagem</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-user-nurse"></i>
+                            </div>
+                            <p>Formação completa para atuar em hospitais, clínicas e unidades de saúde.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 18 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Estágio supervisionado</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Material didático incluso</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Certificado reconhecido pelo MEC</li>
+                            </ul>
+                            <div class="price">R$ 380,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Técnico em Radiologia</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-x-ray"></i>
+                            </div>
+                            <p>Formação para operar equipamentos de diagnóstico por imagem.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 24 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Laboratório de radiologia</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Segurança radiológica</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Práticas em hospitais parceiros</li>
+                            </ul>
+                            <div class="price">R$ 420,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Cuidador de Idosos</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-wheelchair"></i>
+                            </div>
+                            <p>Especialização para cuidar de idosos com qualidade e humanização.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 6 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Cuidados especiais</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Primeiros socorros</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Nutrição para idosos</li>
+                            </ul>
+                            <div class="price">R$ 280,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 4 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Auxiliar de Farmácia</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <p>Formação para atuar em drogarias, farmácias hospitalares e laboratórios.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 12 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Manipulação de medicamentos</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Atendimento ao cliente</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Controle de estoque</li>
+                            </ul>
+                            <div class="price">R$ 320,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 5 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Técnico em Segurança do Trabalho</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-hard-hat"></i>
+                            </div>
+                            <p>Prevenção de acidentes e promoção de saúde ocupacional.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 18 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> NRs atualizadas</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Gestão de riscos</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Primeiros socorros</li>
+                            </ul>
+                            <div class="price">R$ 360,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 6 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-course">
+                        <div class="card-header">
+                            <h4>Massoterapia</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="course-icon">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <p>Técnicas de massagem terapêutica para promoção de saúde e bem-estar.</p>
+                            <ul class="list-unstyled text-start mb-4">
+                                <li><i class="fas fa-check text-success me-2"></i> Duração: 8 meses</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Anatomia aplicada</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Técnicas diversas</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Práticas supervisionadas</li>
+                            </ul>
+                            <div class="price">R$ 300,00/mês</div>
+                            <button class="btn-enroll">Inscreva-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section id="diferenciais" class="features-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Por que escolher o CELL?</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Excelência Acadêmica</h4>
+                        <p>Métodos de ensino atualizados e alinhados com as demandas do mercado de trabalho em saúde.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h4>Foco em Saúde</h4>
+                        <p>Especializados na formação de profissionais para a área da saúde com alto índice de empregabilidade.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Professores Qualificados</h4>
+                        <p>Corpo docente composto por profissionais atuantes na área da saúde com experiência prática.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="contact-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Entre em Contato</h2>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="contact-info">
+                        <h3 class="mb-4"><i class="fas fa-map-marker-alt contact-icon"></i> Nossa Localização</h3>
+                        <p class="mb-4">Rua Coronel Lacerda, 123 - Centro<br>Mauriti - CE, 63210-000</p>
+                        
+                        <h3 class="mb-4"><i class="fas fa-phone contact-icon"></i> Telefones</h3>
+                        <p class="mb-4">(88) 3552-1234<br>(88) 9 9999-8888</p>
+                        
+                        <h3 class="mb-4"><i class="fas fa-envelope contact-icon"></i> Email</h3>
+                        <p class="mb-4">contato@cellmauriti.com.br</p>
+                        
+                        <h3 class="mb-4"><i class="fas fa-clock contact-icon"></i> Horário de Funcionamento</h3>
+                        <p>Segunda a Sexta: 8h às 22h<br>Sábado: 8h às 12h</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="bg-light p-4 rounded">
+                        <h3 class="mb-4">Envie uma mensagem</h3>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Nome completo">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" placeholder="Telefone">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select">
+                                    <option selected>Selecione um curso de interesse</option>
+                                    <option>Técnico em Enfermagem</option>
+                                    <option>Técnico em Radiologia</option>
+                                    <option>Cuidador de Idosos</option>
+                                    <option>Auxiliar de Farmácia</option>
+                                    <option>Técnico em Segurança do Trabalho</option>
+                                    <option>Massoterapia</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Mensagem"></textarea>
+                            </div>
+                            <button type="submit" class="btn-enroll w-100">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4><i class="fas fa-graduation-cap me-2"></i>CELL</h4>
+                    <p>Centro Educacional Lacerda<br>Formando profissionais de saúde desde 2005</p>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4>Links Rápidos</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio" class="text-white text-decoration-none">Início</a></li>
+                        <li><a href="#sobre" class="text-white text-decoration-none">Sobre</a></li>
+                        <li><a href="#cursos" class="text-white text-decoration-none">Cursos</a></li>
+                        <li><a href="#contato" class="text-white text-decoration-none">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h4>Redes Sociais</h4>
+                    <div class="d-flex">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="mt-4 mb-4" style="background-color: rgba(255,255,255,0.2);">
+            
+            <div class="text-center">
+                <p>&copy; 2023 CELL - Centro Educacional Lacerda. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Voltar ao Topo -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Scroll suave para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Atualizar menu ativo
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Botão voltar ao topo
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Atualizar menu ativo ao rolar
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
