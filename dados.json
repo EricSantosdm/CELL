@@ -1,842 +1,122 @@
 [
   {
-    "curso": "Cavaleiro da Capela",
-    "cod": "978eddd0041f81521adce5613cfccf49e59ed968",
-    "tempo": "1 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "c3d7ec57df3b95030938ae88633f34c7edc3a628",
+    "curso": "Cavaleiro Anon",
+    "cod": "4eef1d6146fec016541dfbee1fbdc68a897bbf0c",
     "tempo": "12 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "a03f4e4f76ffa8add639ff4570344ea3dc022f29",
-    "tempo": "1 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "dce6119f73701ef466f1c7bcc58abedbeb27959e",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "20cfa54c9f5c92d7b8839dc53f812858482a23d9",
-    "tempo": "5 dias",
     "status": "Avaliação Pendente",
     "corretor": "Ikaro Fachin, Bruno de Cico Bataglia Cornicelli",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro da Capela",
-    "cod": "4c3540b699ba8de1fd329edbd1f61950959d12a7",
-    "tempo": "4 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Cláudio Roberto Silva Júnior, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "f594a9694bf626c65b23dc2b948978ff14d7c075",
-    "tempo": "14 dias",
+    "cod": "dd0d7a08ed5a62f505de1cf632d2134d310daa80",
+    "tempo": "8 dias",
     "status": "Avaliação Pendente",
-    "corretor": "Lucas Martins Diniz, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "172b04d6d8b170dadddfbc3e9d559b52c58add76",
-    "tempo": "15 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "eb504f7d67bf731e14ed83a36dc1db08a9d24477",
-    "tempo": "14 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ikaro Fachin, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "0050c8af9061d4a4caa1c6e274efa548479a9340",
-    "tempo": "10 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "9b668bdc3bdb0768a1577d9d4e4f5168da8ef2bb",
-    "tempo": "2 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Lucas Martins Diniz, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "14bc76651b049fd83618d3b539c75861494446ea",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Rodrigo Oliveira da Silva, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "ad698049bd32a27387a32df0a50dc52021158d30",
-    "tempo": "7 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Eric dos Santos Bezerra, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "02c69d03d3d17ebba2eba24ebcacc34af01c0383",
-    "tempo": "4 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Rodrigo Oliveira da Silva, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "64173946e2307c3f905d3d6c4bab55def26f6ffd",
-    "tempo": "11 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ikaro Fachin, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "0cbcddb77124556d55fb6593a1390fe28f3804bb",
-    "tempo": "7 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "7b35d5ddaec59a7fec08dfbaacc6853a48376df2",
-    "tempo": "9 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "5979d17bd2afd322dbfce4ba86b7a9597ef4f7be",
-    "tempo": "4 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "89da7de85962ed4dc697fa31f51abcab28df99af",
-    "tempo": "15 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "1c940aaa83a13e8ec74726b123a3b12c173caf1a",
-    "tempo": "11 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "3ab76daaffb9b83fa03f7747404b1b565fcd6258",
-    "tempo": "3 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ikaro Fachin, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "0abeb65294c9fd827dbef4e5fc9ec36d7ed9acb9",
-    "tempo": "6 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Lucas Martins Diniz, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "7eef6a1a9394c47bc864c0ae3ffe3b298f02bab9",
-    "tempo": "9 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "53392438058a107d1eb3c3f711abbb50e6d8c08e",
-    "tempo": "15 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Cláudio Roberto Silva Júnior, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "1e00b7e8172df6b92dac0d0937c6b3c41ee0498c",
-    "tempo": "7 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Lucas Martins Diniz, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "366811d93ecc7eab51ab34679f436639595bbf35",
-    "tempo": "6 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Rodrigo Oliveira da Silva, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "c9ace78075df14a93d800118c08d4c1f1ef99cff",
-    "tempo": "5 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Lucas Martins Diniz, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "ea9c98d1b65bc5bf09a1525be8821d5314c90498",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ikaro Fachin, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "6acfa8157093b4fd30c0b4da76c0893186141343",
-    "tempo": "1 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ikaro Fachin, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "77f4adeb903b43e240e1dcce61842a5dfc08f928",
-    "tempo": "3 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Ikaro Fachin, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "079b567a7d766e7d23f7ac80c888babafe582739",
-    "tempo": "7 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Cláudio Roberto Silva Júnior, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "6fea85ae978c1df3ef095a038620510dd0d27dfc",
-    "tempo": "9 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "6ae079c17bfa9b82cec6d2fd5c4b3ced543274b3",
-    "tempo": "1 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Ikaro Fachin, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "fbd666bccaa95832cd40201ca410c988e2d4887b",
-    "tempo": "7 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "cb73fdf58fb110f16363a49ae9f98ff739c1afaf",
-    "tempo": "7 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ikaro Fachin, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "1cc2e7ecbe043f0ba2ac43a685412b704472dec6",
-    "tempo": "9 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "0a0f21904ada129f12e02e385eb26b2c495e2184",
-    "tempo": "2 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Eric dos Santos Bezerra, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "8a7a6ce1702fd67b735a3b47b2704d154fd3a64b",
-    "tempo": "13 dias",
-    "status": "Avaliação Parcial",
     "corretor": "Rodrigo Oliveira da Silva, Eric dos Santos Bezerra",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Salém",
-    "cod": "21e5c4848a493987661b553e7d735eff0a5e9796",
-    "tempo": "12 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "c893f842edd53d7a3b9cf92bce09a9b5b30520e6",
-    "tempo": "12 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Cláudio Roberto Silva Júnior, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
     "curso": "Cavaleiro do Ébano",
-    "cod": "ee38cd12c7ba6014fcb67920cf8f613dcb6924f1",
-    "tempo": "13 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "d4ac91a2f795bdc7ee24d9b4ed3c49a12580ec1e",
-    "tempo": "10 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Cláudio Roberto Silva Júnior, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "0297703e4df5f44804d9f58062e015095a580d89",
-    "tempo": "7 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "2f36c28c52ce351c0da3be5481a9eb89ff215dab",
+    "cod": "5c22f955080697bb59c17b263ff76b95026b24de",
     "tempo": "14 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "3a2e4cff1b6f9979c22819b8a16e59dda86f6f95",
-    "tempo": "8 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Lucas Martins Diniz, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "2388ce65184f96c5c6cbb8bb16f577c6aa9e65ee",
-    "tempo": "1 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "a9d2bfc00f68ea70f8cb32646366673ce2f72e45",
-    "tempo": "8 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Rodrigo Oliveira da Silva, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "d95d305a56f9f8a5c4e36a27e316e4f7e27bbb6c",
-    "tempo": "12 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Rodrigo Oliveira da Silva, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "0d6a3e9f975fd19f3e3695c2407261694e6be9fd",
-    "tempo": "5 dias",
     "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "d83f66453043b68b13241fe15eb4398b7d0d33f4",
-    "tempo": "5 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Cláudio Roberto Silva Júnior, Francisco Iago Carneiro Rodrigues",
+    "corretor": "Lucas Martins Diniz, Eric dos Santos Bezerra",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro do Ébano",
-    "cod": "5981b864a7e215c5f5927b64a57d780295702880",
-    "tempo": "7 dias",
+    "cod": "fba75c2610afb32c27e307118e14b28c69cfeb72",
+    "tempo": "2 dias",
     "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "b708cac891556c67005d2eddfb189835dec01b0d",
-    "tempo": "7 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Cláudio Roberto Silva Júnior, Bruno Vinicius de Carvalho",
+    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Eric dos Santos Bezerra",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro da Ex-Templário",
-    "cod": "532aa9991e42bb91560c22720a52f477c8dfec2a",
-    "tempo": "7 dias",
+    "cod": "a0e584309dec5ae6b39caad0acd963940aad95e3",
+    "tempo": "9 dias",
     "status": "Avaliação Parcial",
-    "corretor": "Bruno Vinicius de Carvalho, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "46ba52221c57fa3b985b11f3e4ba26dc42680590",
-    "tempo": "6 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "c6642946826991f507a8213859bd0d8d8b655f69",
-    "tempo": "12 dias",
-    "status": "Avaliação Pendente",
     "corretor": "Cláudio Roberto Silva Júnior, Eric dos Santos Bezerra",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Capela",
-    "cod": "d0d64ff7fbeccdabebc50c47e7d6dcf967654e75",
-    "tempo": "13 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Lucas Martins Diniz, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "0acd753e48b86d4140ab4784dc1eb75804189135",
-    "tempo": "5 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
     "curso": "Cavaleiro da Ex-Templário",
-    "cod": "4eeba4c746f7772faab2fc8885d2bcd0d583813c",
-    "tempo": "10 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "8b48cb303b92ef97404af1f936012d7541b9d72a",
-    "tempo": "5 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "ca181e4824930d01c46cea3868be48b89e9c4048",
-    "tempo": "4 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "de2a36bfe58e0122571fe9208cbab06faa806385",
-    "tempo": "14 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Lucas Martins Diniz, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "3d537fc03b812ac7d5bad944e40b50b16237acb3",
-    "tempo": "2 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Ikaro Fachin, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "0d16a1a700aad1e84fcbeb577fc80294c111895e",
-    "tempo": "13 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "2809d701910352f1c6b19ebdfee53a05ea593d29",
-    "tempo": "8 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Bruno Vinicius de Carvalho, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "9da0205d22fffbf9c74c7eff1ac1938c3c7d2759",
-    "tempo": "14 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Rodrigo Oliveira da Silva, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "133973d5caff9f15f545d85a389bcdde5bdefed6",
-    "tempo": "13 dias",
+    "cod": "a2a5f24a42ab1cdce1ed953b39fc0490b7b65d2a",
+    "tempo": "12 dias",
     "status": "Avaliação Pendente",
     "corretor": "Francisco Iago Carneiro Rodrigues, Rodrigo Oliveira da Silva",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "353a1cfb932917b594bf59c7ce0bbbbf9953bf89",
-    "tempo": "1 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Cláudio Roberto Silva Júnior, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
     "curso": "Cavaleiro Anon",
-    "cod": "9408a55d63a402268fc93c26c934c6cb11918f07",
-    "tempo": "4 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "17e7cb8cdf5e73ac8bb8af519e41796c2b9c4c39",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "9ecb8ab5678caa5210e6136bdbbbb90d03cbbe3f",
-    "tempo": "5 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "783dffa60c68b9f8f8c908e3dac759e8d963f08a",
-    "tempo": "5 dias",
+    "cod": "9afba8c0c9be65b15692739777d6ef6fa2c88227",
+    "tempo": "3 dias",
     "status": "Avaliação Pendente",
-    "corretor": "Lucas Martins Diniz, Ikaro Fachin",
+    "corretor": "Francisco Iago Carneiro Rodrigues, Rodrigo Oliveira da Silva",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Salém",
-    "cod": "74fe751e46c2bb44d7c776d10153b098afa88fb9",
+    "curso": "Cavaleiro da Ex-Templário",
+    "cod": "944411bd6f5b649d3a80bd3746ec88296558bdcb",
     "tempo": "12 dias",
+    "status": "Avaliação Pendente",
+    "corretor": "Rodrigo Oliveira da Silva, Eric dos Santos Bezerra",
+    "tipo": "normal"
+  },
+  {
+    "curso": "Cavaleiro do Ébano",
+    "cod": "10863fde0d650157835b24414e56d91480af0e37",
+    "tempo": "14 dias",
     "status": "Avaliação Iniciada",
     "corretor": "Bruno Vinicius de Carvalho, Rodrigo Oliveira da Silva",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Salém",
-    "cod": "84e319a372befd35d84cfa01877d5474b6fe2f71",
+    "curso": "Cavaleiro da Ex-Templário",
+    "cod": "18a5511750b5d15b1ece077ba3a9dfbe4c63abb3",
     "tempo": "8 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Eric dos Santos Bezerra, Ikaro Fachin",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "a805d326af450975f1dea8cbfe3c48771e423a0a",
-    "tempo": "13 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "c3d89b233debfc2ee92d77cc00f42f1927c65ad8",
-    "tempo": "13 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Cláudio Roberto Silva Júnior, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "d84fe9158aa3d9984e411463ac4713e66917c065",
-    "tempo": "9 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "f92d1218d4679b9ce7eb031d7dff8b4eb464a800",
-    "tempo": "8 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "96035a1f907ce862ac17ff1e14af1645d2127993",
-    "tempo": "3 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "598e350c521abf8d1b38c5ee4ed18c0b8e3b6ca0",
-    "tempo": "9 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "8e3595925ead0db9503e5f70d89bdef499293d7b",
-    "tempo": "10 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Lucas Martins Diniz, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "cba36966ecbffbe7d2defcce2b8ff2aacb617efb",
-    "tempo": "13 dias",
     "status": "Avaliação Pendente",
     "corretor": "Bruno Vinicius de Carvalho, Ikaro Fachin",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro da Salém",
-    "cod": "41c0ffe9c2a1525f8791b5e21365904b5b594e2e",
-    "tempo": "15 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Eric dos Santos Bezerra, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "222be4e4281ea98b897e4538d6ea09c2679982cf",
-    "tempo": "11 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Cláudio Roberto Silva Júnior, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "ae6497d9485efa343338114c6c288ce59059769f",
-    "tempo": "12 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Lucas Martins Diniz, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Tríade",
-    "cod": "d50e3fe0b6c6a8b0740fca6d70cd72e83ebcc5de",
-    "tempo": "14 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Bruno Vinicius de Carvalho, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "6e158119eca69a6b2fe02095d93287cf906fbcd7",
+    "cod": "1a8246bebe50c5748ed0f7487759d0cf9ed67c54",
     "tempo": "5 dias",
     "status": "Avaliação Iniciada",
-    "corretor": "Bruno de Cico Bataglia Cornicelli, Ikaro Fachin",
+    "corretor": "Lucas Martins Diniz, Eric dos Santos Bezerra",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro da Capela",
-    "cod": "96d14aab5d5e7466f5d3dbbee80c788256937996",
-    "tempo": "3 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Bruno Vinicius de Carvalho, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "2f463e9ff6a63eab1785086828ebc23be76a33f4",
-    "tempo": "4 dias",
+    "cod": "b68ae122881f066159872fa8ef16335d288b3c14",
+    "tempo": "6 dias",
     "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Ícaro Tadeu de Castro Xavier Lima",
+    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Bruno de Cico Bataglia Cornicelli",
     "tipo": "normal"
   },
   {
     "curso": "Cavaleiro Anon",
-    "cod": "611e26f5dc212cdd3c28fe556d7612541ae53835",
-    "tempo": "6 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Cláudio Roberto Silva Júnior, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "91fb4cff17ead40595bfc8f086eff2b1f0f5b023",
-    "tempo": "1 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Francisco Iago Carneiro Rodrigues, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "95c3d5bd929827cff5e9d7865b5f7940dc02b65b",
-    "tempo": "13 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Eric dos Santos Bezerra, Francisco Iago Carneiro Rodrigues",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "6dd0885e733b6bfe84d8fba897eaff346cff2e55",
-    "tempo": "3 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Eric dos Santos Bezerra, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "e172b68100c834d26f9e81d67c1354a088ae573d",
-    "tempo": "6 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Rodrigo Oliveira da Silva, Ícaro Tadeu de Castro Xavier Lima",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "b7962d3c4ff120c655643e7187cc1c9bc0af11b2",
-    "tempo": "13 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Bruno Vinicius de Carvalho, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "5488d71b386d1fcf3fd49f8232d4af9d361e6470",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Bruno de Cico Bataglia Cornicelli",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "ada48877133beec3a87fe6e544f49d9050248d44",
-    "tempo": "11 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ikaro Fachin, Lucas Martins Diniz",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "7e995a4581984df8ffb3cb3a60439113ffddc5d0",
+    "cod": "700ca02e545ac93a41faf58bc6ac590eb309d5c7",
     "tempo": "15 dias",
     "status": "Avaliação Parcial",
+    "corretor": "Bruno de Cico Bataglia Cornicelli, Cláudio Roberto Silva Júnior",
+    "tipo": "normal"
+  },
+  {
+    "curso": "Cavaleiro da Salém",
+    "cod": "d2ec76b2d67b0a439b0f0d0a3fd6cd9bdc0f4b62",
+    "tempo": "11 dias",
+    "status": "Avaliação Iniciada",
     "corretor": "Cláudio Roberto Silva Júnior, Lucas Martins Diniz",
     "tipo": "normal"
   },
   {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "8bd19552ef0279259bbabdf84610285f260789fc",
-    "tempo": "15 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Cláudio Roberto Silva Júnior, Bruno Vinicius de Carvalho",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "2375ab8f5b272fdb89c3b0f6839ef3960237469d",
-    "tempo": "7 dias",
+    "curso": "Cavaleiro da Tríade",
+    "cod": "9c0a09b379402a02c0e8def8358c690cac12cc42",
+    "tempo": "6 dias",
     "status": "Avaliação Iniciada",
-    "corretor": "Ikaro Fachin, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Capela",
-    "cod": "274b98e338126f23ab06329756d7c6ff5cf2feb8",
-    "tempo": "14 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Ikaro Fachin, Cláudio Roberto Silva Júnior",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro do Ébano",
-    "cod": "170aa9b14f5d94c2ff06e0d9ac90c2926af4711b",
-    "tempo": "13 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Lucas Martins Diniz, Rodrigo Oliveira da Silva",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "2be29ee95bdec8c71c36bcf69d789dc2299bdf7d",
-    "tempo": "14 dias",
-    "status": "Avaliação Iniciada",
-    "corretor": "Bruno Vinicius de Carvalho, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Salém",
-    "cod": "f8661aa69dd39a534ec4a9d8413b237fa4add3a1",
-    "tempo": "15 dias",
-    "status": "Avaliação Pendente",
-    "corretor": "Ikaro Fachin, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro Anon",
-    "cod": "0231104bcd0eb7f32624f78674debd944abe2216",
-    "tempo": "14 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Ikaro Fachin, Eric dos Santos Bezerra",
-    "tipo": "normal"
-  },
-  {
-    "curso": "Cavaleiro da Ex-Templário",
-    "cod": "ff441618ac1052aa30dd679c70ab23f6c14a8ce7",
-    "tempo": "5 dias",
-    "status": "Avaliação Parcial",
-    "corretor": "Eric dos Santos Bezerra, Bruno de Cico Bataglia Cornicelli",
+    "corretor": "Ícaro Tadeu de Castro Xavier Lima, Lucas Martins Diniz",
     "tipo": "normal"
   }
 ]
