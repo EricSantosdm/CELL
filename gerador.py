@@ -42,7 +42,7 @@ corretores = [
 def gerar_dado():
     curso = random.choice(cursos)
     cod = gerar_hash()
-    tempo = f"{random.randint(1, 30)} dias"  # Tempo entre 1 e 30 dias
+    tempo = f"{random.randint(1, 15)} dias"  # Tempo entre 1 e 30 dias
     status = random.choice(status_list)
     corretor = random.sample(corretores, k=2)  # Seleciona 2 corretores aleatórios
     corretor = ", ".join(corretor)  # Junta os nomes dos corretores em uma string
