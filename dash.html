@@ -236,8 +236,6 @@
                                             <option value="Avaliação Parcial">Avaliação Parcial</option>
                                             <option value="Avaliação Iniciada">Avaliação Iniciada</option>
                                             <option value="Pendente">Pendente</option>
-                                            <option value="Concluída">Concluída</option>
-                                            <option value="Em Análise">Em Análise</option>
                                             <option value="Atrasada">Atrasada</option>
                                         </select>
                                     </div>
@@ -882,7 +880,7 @@
                 : "badge-normal";
 
             row.innerHTML = `
-                <td>${prova.curso}</td>
+                <td><img src="img/${prova.curso}.png" alt="${prova.curso}" width="50" height="50"></td>
                 <td><small>${prova.cod}</small></td>
                 <td>
                     <div>${prova.tempo}</div>
