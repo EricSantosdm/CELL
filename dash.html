@@ -359,7 +359,7 @@
         <footer class="footer mt-5 py-4 bg-light">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 text-lg-start">Dashboard de Provas &copy; 2023</div>
+                    <div class="col-lg-6 text-lg-start">Garotos de Programa CCC &copy; 2025</div>
                     <div class="col-lg-6 text-lg-end">
                         <span class="text-muted">Atualizado em: <span id="update-time"></span></span>
                     </div>
@@ -371,494 +371,582 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     
-    <script>
-        // Variável global para armazenar os dados das provas
-        let dadosProvas = [];
-        let filteredData = [];
-        let provasPorDiaChart = null;
-        let categoriasChart = null;
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+    // Register the datalabels plugin
+    Chart.register(ChartDataLabels);
 
-        // Atualizar data atual
-        function updateCurrentDate() {
-            document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            document.getElementById('update-time').textContent = new Date().toLocaleTimeString('pt-BR');
-        }
+    // Variável global para armazenar os dados das provas
+    let dadosProvas = [];
+    let filteredData = [];
+    let provasPorDiaChart = null;
+    let categoriasChart = null;
 
-        // Função para carregar os dados do arquivo JSON
-        async function carregarDados() {
-            try {
-                const response = await fetch('dados.json');
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar os dados');
-                }
-                dadosProvas = await response.json();
-                return dadosProvas;
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-                document.getElementById('loading').innerHTML = `
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está acessível.
-                    </div>
-                `;
-                return [];
+    // Atualizar data atual
+    function updateCurrentDate() {
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        document.getElementById('update-time').textContent = new Date().toLocaleTimeString('pt-BR');
+    }
+
+    // Função para carregar os dados do arquivo JSON
+    async function carregarDados() {
+        try {
+            const response = await fetch('dados.json');
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os dados');
             }
-        }
-
-        // Função para categorizar as provas
-        function categorizarProva(curso) {
-            return (curso === "Cavaleiro Anon" || curso === "Cavaleiro do Ébano") 
-                ? "Filosóficos" 
-                : "Históricos";
-        }
-
-        // Função para determinar criticidade
-        function determinarCriticidade(tempo) {
-            const dias = parseInt(tempo);
-            return dias > 12 ? "Crítico" : "Normal";
-        }
-
-        // Função para determinar o dia da semana
-        function getDiaSemana(dias) {
-            const diasMap = {
-                0: "Domingo",
-                1: "Segunda",
-                2: "Terça",
-                3: "Quarta",
-                4: "Quinta",
-                5: "Sexta",
-                6: "Sábado"
-            };
-            
-            const hoje = new Date();
-            const vencimento = new Date(hoje);
-            vencimento.setDate(hoje.getDate() + (15 - parseInt(dias)));
-            return diasMap[vencimento.getDay()];
-        }
-
-        // Processar dados
-        function processarDados(dados) {
-            let filosoficos = 0;
-            let historicos = 0;
-            let criticos = 0;
-            let normais = 0;
-            
-            // Contagem por dia da semana
-            const provasPorDia = {
-                "Domingo": 0,
-                "Segunda": 0,
-                "Terça": 0,
-                "Quarta": 0,
-                "Quinta": 0,
-                "Sexta": 0,
-                "Sábado": 0
-            };
-            
-            // Processar cada prova
-            dados.forEach(prova => {
-                // Categorizar
-                const categoria = categorizarProva(prova.curso);
-                if (categoria === "Filosóficos") filosoficos++;
-                if (categoria === "Históricos") historicos++;
-                
-                // Criticidade
-                const criticidade = determinarCriticidade(prova.tempo);
-                if (criticidade === "Crítico") criticos++;
-                if (criticidade === "Normal") normais++;
-                
-                // Dia da semana
-                const dia = getDiaSemana(parseInt(prova.tempo));
-                provasPorDia[dia]++;
-                
-                // Adicionar propriedades processadas ao objeto
-                prova.categoria = categoria;
-                prova.criticidade = criticidade;
-                prova.diaSemana = dia;
-            });
-            
-            return {
-                filosoficos,
-                historicos,
-                criticos,
-                normais,
-                provasPorDia,
-                total: dados.length
-            };
-        }
-
-        // Aplicar filtros
-        function aplicarFiltros() {
-            const categoria = document.getElementById('filter-categoria').value;
-            const criticidade = document.getElementById('filter-criticidade').value;
-            const status = document.getElementById('filter-status').value;
-            const dia = document.getElementById('filter-dia').value;
-            const tipo = document.getElementById('filter-tipo').value;
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            
-            filteredData = dadosProvas.filter(prova => {
-                // Aplicar filtros de seleção
-                if (categoria && prova.categoria !== categoria) return false;
-                if (criticidade && prova.criticidade !== criticidade) return false;
-                if (status && prova.status !== status) return false;
-                if (dia && prova.diaSemana !== dia) return false;
-                if (tipo && prova.tipo !== tipo) return false;
-                
-                // Aplicar pesquisa
-                if (searchTerm) {
-                    const matchesCurso = prova.curso.toLowerCase().includes(searchTerm);
-                    const matchesCorretor = prova.corretor.toLowerCase().includes(searchTerm);
-                    const matchesCod = prova.cod.toLowerCase().includes(searchTerm);
-                    
-                    if (!matchesCurso && !matchesCorretor && !matchesCod) return false;
-                }
-                
-                return true;
-            });
-            
-            // Atualizar interface
-            atualizarFiltrosAtivos();
-            atualizarDashboard();
-        }
-
-        // Atualizar filtros ativos
-        function atualizarFiltrosAtivos() {
-            const activeFilters = document.getElementById('active-filters');
-            activeFilters.innerHTML = '';
-            
-            const categoria = document.getElementById('filter-categoria').value;
-            const criticidade = document.getElementById('filter-criticidade').value;
-            const status = document.getElementById('filter-status').value;
-            const dia = document.getElementById('filter-dia').value;
-            const tipo = document.getElementById('filter-tipo').value;
-            const searchTerm = document.getElementById('search-input').value;
-            
-            if (categoria) {
-                addActiveFilter('Categoria: ' + categoria, 'filter-categoria');
-            }
-            if (criticidade) {
-                addActiveFilter('Criticidade: ' + criticidade, 'filter-criticidade');
-            }
-            if (status) {
-                addActiveFilter('Status: ' + status, 'filter-status');
-            }
-            if (dia) {
-                addActiveFilter('Dia: ' + dia, 'filter-dia');
-            }
-            if (tipo) {
-                addActiveFilter('Tipo: ' + tipo, 'filter-tipo');
-            }
-            if (searchTerm) {
-                addActiveFilter('Pesquisa: "' + searchTerm + '"', 'search-input');
-            }
-            
-            if (activeFilters.innerHTML === '') {
-                activeFilters.innerHTML = '<span class="text-muted">Nenhum filtro aplicado</span>';
-            }
-        }
-
-        // Adicionar filtro ativo
-        function addActiveFilter(text, filterId) {
-            const activeFilters = document.getElementById('active-filters');
-            const filterElement = document.createElement('div');
-            filterElement.className = 'active-filter';
-            filterElement.innerHTML = `
-                ${text}
-                <i class="bi bi-x" data-filter="${filterId}"></i>
+            dadosProvas = await response.json();
+            return dadosProvas;
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            document.getElementById('loading').innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está acessível.
+                </div>
             `;
-            activeFilters.appendChild(filterElement);
-            
-            // Adicionar evento de clique para remover o filtro
-            filterElement.querySelector('i').addEventListener('click', function() {
-                document.getElementById(filterId).value = '';
-                aplicarFiltros();
-            });
+            return [];
+        }
+    }
+
+    // Função para categorizar as provas
+    function categorizarProva(curso) {
+        return (curso === "Cavaleiro Anon" || curso === "Cavaleiro do Ébano")
+            ? "Filosóficos"
+            : "Históricos";
+    }
+
+    // Função para determinar criticidade
+    function determinarCriticidade(tempo) {
+        const dias = parseInt(tempo);
+        return dias > 12 ? "Crítico" : "Normal";
+    }
+
+    // Função para determinar o dia da semana (for general use, not for the new stacked chart)
+    function getDiaSemana(dias) {
+        const diasMap = {
+            0: "Domingo",
+            1: "Segunda",
+            2: "Terça",
+            3: "Quarta",
+            4: "Quinta",
+            5: "Sexta",
+            6: "Sábado"
+        };
+
+        const hoje = new Date();
+        const vencimento = new Date(hoje);
+        vencimento.setDate(hoje.getDate() + (15 - parseInt(dias)));
+        return diasMap[vencimento.getDay()];
+    }
+
+    // NEW FUNCTION: Get the due date string (DD/MM/YYYY) for the stacked chart
+    function getDueDate(dias) {
+        const hoje = new Date();
+        const vencimento = new Date(hoje);
+        vencimento.setDate(hoje.getDate() + (15 - parseInt(dias))); // Assuming 15 days is the max
+        const day = String(vencimento.getDate()).padStart(2, '0');
+        const month = String(vencimento.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const year = vencimento.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    // Processar dados
+    function processarDados(dados) {
+        let filosoficos = 0;
+        let historicos = 0;
+        let criticos = 0;
+        let normais = 0;
+
+        // Contagem por dia da semana (for general use, not for the new stacked chart)
+        const provasPorDia = {
+            "Domingo": 0,
+            "Segunda": 0,
+            "Terça": 0,
+            "Quarta": 0,
+            "Quinta": 0,
+            "Sexta": 0,
+            "Sábado": 0
+        };
+
+        // NEW: Structure for stacked chart: { 'DD/MM/YYYY': { 'Filosóficos': count, 'Históricos': count } }
+        const provasPorDataECategoria = {};
+        const allDates = new Set(); // To collect all unique dates
+
+        // Processar cada prova
+        dados.forEach(prova => {
+            // Categorizar
+            const categoria = categorizarProva(prova.curso);
+            if (categoria === "Filosóficos") filosoficos++;
+            if (categoria === "Históricos") historicos++;
+
+            // Criticidade
+            const criticidade = determinarCriticidade(prova.tempo);
+            if (criticidade === "Crítico") criticos++;
+            if (criticidade === "Normal") normais++;
+
+            // Dia da semana (for general use)
+            const dia = getDiaSemana(parseInt(prova.tempo));
+            provasPorDia[dia]++;
+
+            // NEW: Get the due date for the new chart
+            const dueDate = getDueDate(parseInt(prova.tempo));
+            allDates.add(dueDate); // Add date to set
+
+            if (!provasPorDataECategoria[dueDate]) {
+                provasPorDataECategoria[dueDate] = { "Filosóficos": 0, "Históricos": 0 };
+            }
+            provasPorDataECategoria[dueDate][categoria]++;
+
+            // Adicionar propriedades processadas ao objeto
+            prova.categoria = categoria;
+            prova.criticidade = criticidade;
+            prova.diaSemana = dia;
+        });
+
+        // NEW: Prepare data for the stacked bar chart
+        const sortedDates = Array.from(allDates).sort((a, b) => {
+            const [ad, am, ay] = a.split('/').map(Number);
+            const [bd, bm, by] = b.split('/').map(Number);
+            // Chart.js expects dates to be sorted for correct rendering
+            return new Date(ay, am - 1, ad).getTime() - new Date(by, bm - 1, bd).getTime();
+        });
+
+        const provasHistoricoData = [];
+        const provasFilosoficoData = [];
+
+        sortedDates.forEach(date => {
+            provasHistoricoData.push(provasPorDataECategoria[date]?.["Históricos"] || 0);
+            provasFilosoficoData.push(provasPorDataECategoria[date]?.["Filosóficos"] || 0);
+        });
+
+        return {
+            filosoficos,
+            historicos,
+            criticos,
+            normais,
+            provasPorDia, // Kept for potential other uses, though not for the new stacked chart directly
+            sortedDates, // NEW: Dates for the X-axis of the stacked chart
+            provasHistoricoData, // NEW: Data for 'Histórico' series
+            provasFilosoficoData, // NEW: Data for 'Filosóficos' series
+            total: dados.length
+        };
+    }
+
+    // Aplicar filtros
+    function aplicarFiltros() {
+        const categoria = document.getElementById('filter-categoria').value;
+        const criticidade = document.getElementById('filter-criticidade').value;
+        const status = document.getElementById('filter-status').value;
+        const dia = document.getElementById('filter-dia').value;
+        const tipo = document.getElementById('filter-tipo').value;
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+        filteredData = dadosProvas.filter(prova => {
+            // Aplicar filtros de seleção
+            if (categoria && prova.categoria !== categoria) return false;
+            if (criticidade && prova.criticidade !== criticidade) return false;
+            if (status && prova.status !== status) return false;
+            if (dia && prova.diaSemana !== dia) return false;
+            if (tipo && prova.tipo !== tipo) return false;
+
+            // Aplicar pesquisa
+            if (searchTerm) {
+                const matchesCurso = prova.curso.toLowerCase().includes(searchTerm);
+                const matchesCorretor = prova.corretor.toLowerCase().includes(searchTerm);
+                const matchesCod = prova.cod.toLowerCase().includes(searchTerm);
+
+                if (!matchesCurso && !matchesCorretor && !matchesCod) return false;
+            }
+
+            return true;
+        });
+
+        // Atualizar interface
+        atualizarFiltrosAtivos();
+        atualizarDashboard();
+    }
+
+    // Atualizar filtros ativos
+    function atualizarFiltrosAtivos() {
+        const activeFilters = document.getElementById('active-filters');
+        activeFilters.innerHTML = '';
+
+        const categoria = document.getElementById('filter-categoria').value;
+        const criticidade = document.getElementById('filter-criticidade').value;
+        const status = document.getElementById('filter-status').value;
+        const dia = document.getElementById('filter-dia').value;
+        const tipo = document.getElementById('filter-tipo').value;
+        const searchTerm = document.getElementById('search-input').value;
+
+        if (categoria) {
+            addActiveFilter('Categoria: ' + categoria, 'filter-categoria');
+        }
+        if (criticidade) {
+            addActiveFilter('Criticidade: ' + criticidade, 'filter-criticidade');
+        }
+        if (status) {
+            addActiveFilter('Status: ' + status, 'filter-status');
+        }
+        if (dia) {
+            addActiveFilter('Dia: ' + dia, 'filter-dia');
+        }
+        if (tipo) {
+            addActiveFilter('Tipo: ' + tipo, 'filter-tipo');
+        }
+        if (searchTerm) {
+            addActiveFilter('Pesquisa: "' + searchTerm + '"', 'search-input');
         }
 
-        // Atualizar todo o dashboard com os dados filtrados
-        function atualizarDashboard() {
-            const processedData = processarDados(filteredData);
-            
-            // Atualizar cards de estatísticas
-            atualizarCardsEstatisticas(processedData);
-            
-            // Atualizar gráficos
-            atualizarGraficos(processedData);
-            
-            // Atualizar tabela
-            preencherTabela(filteredData);
-            
-            // Atualizar contagem
-            document.getElementById('table-count').textContent = 
-                `Mostrando ${filteredData.length} de ${dadosProvas.length} provas`;
-                
-            // Atualizar subtítulo do gráfico
-            const subtitle = document.getElementById('chart-subtitle');
-            if (filteredData.length < dadosProvas.length) {
-                subtitle.textContent = `Filtrado: ${filteredData.length} provas`;
-                subtitle.style.display = 'block';
-            } else {
-                subtitle.style.display = 'none';
-            }
+        if (activeFilters.innerHTML === '') {
+            activeFilters.innerHTML = '<span class="text-muted">Nenhum filtro aplicado</span>';
         }
+    }
+
+    // Adicionar filtro ativo
+    function addActiveFilter(text, filterId) {
+        const activeFilters = document.getElementById('active-filters');
+        const filterElement = document.createElement('div');
+        filterElement.className = 'active-filter';
+        filterElement.innerHTML = `
+            ${text}
+            <i class="bi bi-x" data-filter="${filterId}"></i>
+        `;
+        activeFilters.appendChild(filterElement);
+
+        // Adicionar evento de clique para remover o filtro
+        filterElement.querySelector('i').addEventListener('click', function() {
+            document.getElementById(filterId).value = '';
+            aplicarFiltros();
+        });
+    }
+
+    // Atualizar todo o dashboard com os dados filtrados
+    function atualizarDashboard() {
+        const processedData = processarDados(filteredData);
 
         // Atualizar cards de estatísticas
-        function atualizarCardsEstatisticas(data) {
-            const statsContainer = document.getElementById('stats-cards');
-            
-            statsContainer.innerHTML = `
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card filosofico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Filosóficas</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.filosoficos}</div>
-                                    <div class="mt-2 text-xs text-muted">
-                                        ${Math.round((data.filosoficos / data.total) * 100)}% do total
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-book fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card historico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Históricas</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.historicos}</div>
-                                    <div class="mt-2 text-xs text-muted">
-                                        ${Math.round((data.historicos / data.total) * 100)}% do total
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-landmark fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card critico-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Situação Crítica</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.criticos}</div>
-                                    <div class="mt-2 text-xs text-muted">
-                                        ${Math.round((data.criticos / data.total) * 100)}% do total
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card stat-card normal-card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Provas no Prazo</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.normais}</div>
-                                    <div class="mt-2 text-xs text-muted">
-                                        ${Math.round((data.normais / data.total) * 100)}% do total
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+        atualizarCardsEstatisticas(processedData);
 
         // Atualizar gráficos
-        function atualizarGraficos(data) {
-            // Atualizar gráfico de provas por dia
-            if (provasPorDiaChart) {
-                provasPorDiaChart.data.datasets[0].data = Object.values(data.provasPorDia);
-                provasPorDiaChart.update();
-            } else {
-                const ctxDia = document.getElementById('provasPorDiaChart').getContext('2d');
-                provasPorDiaChart = new Chart(ctxDia, {
-                    type: 'bar',
-                    data: {
-                        labels: Object.keys(data.provasPorDia),
-                        datasets: [{
-                            label: 'Provas por Dia',
-                            data: Object.values(data.provasPorDia),
-                            backgroundColor: [
-                                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
-                                '#e74a3b', '#858796', '#5a5c69'
-                            ],
+        atualizarGraficos(processedData);
+
+        // Atualizar tabela
+        preencherTabela(filteredData);
+
+        // Atualizar contagem
+        document.getElementById('table-count').textContent =
+            `Mostrando ${filteredData.length} de ${dadosProvas.length} provas`;
+
+        // The subtitle for the first chart is removed in HTML to match the new design
+        // const subtitle = document.getElementById('chart-subtitle');
+        // if (filteredData.length < dadosProvas.length) {
+        //     subtitle.textContent = `Filtrado: ${filteredData.length} provas`;
+        //     subtitle.style.display = 'block';
+        // } else {
+        //     subtitle.style.display = 'none';
+        // }
+    }
+
+    // Atualizar cards de estatísticas
+    function atualizarCardsEstatisticas(data) {
+        const statsContainer = document.getElementById('stats-cards');
+
+        statsContainer.innerHTML = `
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card filosofico-card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Filosóficas</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.filosoficos}</div>
+                                <div class="mt-2 text-xs text-muted">
+                                    ${data.total > 0 ? Math.round((data.filosoficos / data.total) * 100) : 0}% do total
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card historico-card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Provas Históricas</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.historicos}</div>
+                                <div class="mt-2 text-xs text-muted">
+                                    ${data.total > 0 ? Math.round((data.historicos / data.total) * 100) : 0}% do total
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-landmark fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card critico-card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Situação Crítica</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.criticos}</div>
+                                <div class="mt-2 text-xs text-muted">
+                                    ${data.total > 0 ? Math.round((data.criticos / data.total) * 100) : 0}% do total
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card normal-card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Provas no Prazo</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800 stat-value">${data.normais}</div>
+                                <div class="mt-2 text-xs text-muted">
+                                    ${data.total > 0 ? Math.round((data.normais / data.total) * 100) : 0}% do total
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Atualizar gráficos
+    function atualizarGraficos(data) {
+        // Atualizar gráfico de provas por dia (Stacked Bar Chart)
+        if (provasPorDiaChart) {
+            provasPorDiaChart.data.labels = data.sortedDates;
+            provasPorDiaChart.data.datasets[0].data = data.provasHistoricoData;
+            provasPorDiaChart.data.datasets[1].data = data.provasFilosoficoData;
+            provasPorDiaChart.update();
+        } else {
+            const ctxDia = document.getElementById('provasPorDiaChart').getContext('2d');
+            provasPorDiaChart = new Chart(ctxDia, {
+                type: 'bar',
+                data: {
+                    labels: data.sortedDates,
+                    datasets: [
+                        {
+                            label: 'Histórico',
+                            data: data.provasHistoricoData,
+                            backgroundColor: '#4e73df', // Blue for Histórico
                             borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    precision: 0
-                                }
+                        },
+                        {
+                            label: 'Filosófico',
+                            data: data.provasFilosoficoData,
+                            backgroundColor: '#e74a3b', // Red for Filosófico (using critico color as example)
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true, // Enable stacking for X-axis
+                            title: {
+                                display: true,
+                                text: 'Data de Vencimento'
                             }
                         },
-                        plugins: {
-                            legend: {
-                                display: false
+                        y: {
+                            beginAtZero: true,
+                            stacked: true, // Enable stacking for Y-axis
+                            ticks: {
+                                precision: 0
                             },
                             title: {
                                 display: true,
-                                text: 'Distribuição de Provas por Dia da Semana'
+                                text: 'Quantidade de Provas'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true, // Display legend for multiple datasets
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Provas por Data e Categoria'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.parsed.y || 0;
+                                    return `${label}: ${value}`;
+                                }
+                            }
+                        },
+                        datalabels: { // For displaying values on top of bars
+                            anchor: 'center', // Position data labels in the center of the segment
+                            align: 'center',
+                            formatter: function(value, context) {
+                                return value > 0 ? value : ''; // Only show positive values
+                            },
+                            color: '#fff', // White color for better contrast on colored bars
+                            font: {
+                                weight: 'bold',
+                                size: 10
                             }
                         }
                     }
-                });
-            }
-            
-            // Atualizar gráfico de categorias
-            if (categoriasChart) {
-                categoriasChart.data.datasets[0].data = [data.filosoficos, data.historicos];
-                categoriasChart.update();
-            } else {
-                const ctxCategoria = document.getElementById('categoriasChart').getContext('2d');
-                categoriasChart = new Chart(ctxCategoria, {
-                    type: 'pie',
-                    data: {
-                        labels: ['Filosóficos', 'Históricos'],
-                        datasets: [{
-                            data: [data.filosoficos, data.historicos],
-                            backgroundColor: ['#4e73df', '#1cc88a'],
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const value = context.raw || 0;
-                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = Math.round((value / total) * 100);
-                                        return `${label}: ${value} (${percentage}%)`;
-                                    }
+                }
+            });
+        }
+
+        // Atualizar gráfico de categorias (Pie Chart) - NO CHANGES HERE
+        if (categoriasChart) {
+            categoriasChart.data.datasets[0].data = [data.filosoficos, data.historicos];
+            categoriasChart.update();
+        } else {
+            const ctxCategoria = document.getElementById('categoriasChart').getContext('2d');
+            categoriasChart = new Chart(ctxCategoria, {
+                type: 'pie',
+                data: {
+                    labels: ['Filosóficos', 'Históricos'],
+                    datasets: [{
+                        data: [data.filosoficos, data.historicos],
+                        backgroundColor: ['#4e73df', '#1cc88a'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
                                 }
                             }
                         }
                     }
-                });
-            }
-        }
-
-        // Preencher tabela
-        function preencherTabela(dados) {
-            const tbody = document.getElementById('provasTableBody');
-            tbody.innerHTML = '';
-            
-            dados.forEach(prova => {
-                const row = document.createElement('tr');
-                
-                // Determinar classes de categoria e criticidade
-                const catClass = prova.categoria === "Filosóficos" 
-                    ? "badge-filosofico" 
-                    : "badge-historico";
-                    
-                const critClass = prova.criticidade === "Crítico" 
-                    ? "badge-critico" 
-                    : "badge-normal";
-                
-                row.innerHTML = `
-                    <td>${prova.curso}</td>
-                    <td><small>${prova.cod}</small></td>
-                    <td>
-                        <div>${prova.tempo}</div>
-                        <div class="progress">
-                            <div class="progress-bar ${critClass.replace('badge', 'bg')}" 
-                                role="progressbar" 
-                                style="width: ${(parseInt(prova.tempo)/15)*100}%" 
-                                aria-valuenow="${parseInt(prova.tempo)}" 
-                                aria-valuemin="0" 
-                                aria-valuemax="15">
-                            </div>
-                        </div>
-                    </td>
-                    <td><span class="badge ${catClass} status-badge">${prova.categoria}</span></td>
-                    <td>${prova.status}</td>
-                    <td><span class="badge ${critClass} status-badge">${prova.criticidade}</span></td>
-                    <td>${prova.corretor || 'Não atribuído'}</td>
-                    <td>${prova.tipo}</td>
-                `;
-                
-                tbody.appendChild(row);
+                }
             });
         }
+    }
 
-        // Limpar filtros
-        function limparFiltros() {
-            document.getElementById('filter-categoria').value = '';
-            document.getElementById('filter-criticidade').value = '';
-            document.getElementById('filter-status').value = '';
-            document.getElementById('filter-dia').value = '';
-            document.getElementById('filter-tipo').value = '';
-            document.getElementById('search-input').value = '';
-            
-            aplicarFiltros();
-        }
+    // Preencher tabela
+    function preencherTabela(dados) {
+        const tbody = document.getElementById('provasTableBody');
+        tbody.innerHTML = '';
 
-        // Inicializar dashboard
-        document.addEventListener('DOMContentLoaded', async () => {
-            updateCurrentDate();
-            
-            // Carregar dados do JSON
-            const dados = await carregarDados();
-            
-            if (dados.length > 0) {
-                // Inicializar dados filtrados
-                filteredData = [...dados];
-                
-                // Configurar eventos dos filtros
-                document.getElementById('filter-categoria').addEventListener('change', aplicarFiltros);
-                document.getElementById('filter-criticidade').addEventListener('change', aplicarFiltros);
-                document.getElementById('filter-status').addEventListener('change', aplicarFiltros);
-                document.getElementById('filter-dia').addEventListener('change', aplicarFiltros);
-                document.getElementById('filter-tipo').addEventListener('change', aplicarFiltros);
-                document.getElementById('search-input').addEventListener('input', aplicarFiltros);
-                document.getElementById('reset-filters').addEventListener('click', limparFiltros);
-                
-                // Processar e exibir dados
-                atualizarDashboard();
-                
-                // Esconder loading e mostrar conteúdo
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
-            }
+        dados.forEach(prova => {
+            const row = document.createElement('tr');
+
+            // Determinar classes de categoria e criticidade
+            const catClass = prova.categoria === "Filosóficos"
+                ? "badge-filosofico"
+                : "badge-historico";
+
+            const critClass = prova.criticidade === "Crítico"
+                ? "badge-critico"
+                : "badge-normal";
+
+            row.innerHTML = `
+                <td>${prova.curso}</td>
+                <td><small>${prova.cod}</small></td>
+                <td>
+                    <div>${prova.tempo}</div>
+                    <div class="progress">
+                        <div class="progress-bar ${critClass.replace('badge', 'bg')}"
+                            role="progressbar"
+                            style="width: ${(parseInt(prova.tempo)/15)*100}%"
+                            aria-valuenow="${parseInt(prova.tempo)}"
+                            aria-valuemin="0"
+                            aria-valuemax="15">
+                        </div>
+                    </div>
+                </td>
+                <td><span class="badge ${catClass} status-badge">${prova.categoria}</span></td>
+                <td>${prova.status}</td>
+                <td><span class="badge ${critClass} status-badge">${prova.criticidade}</span></td>
+                <td>${prova.corretor || 'Não atribuído'}</td>
+                <td>${prova.tipo}</td>
+            `;
+
+            tbody.appendChild(row);
         });
-    </script>
+    }
+
+    // Limpar filtros
+    function limparFiltros() {
+        document.getElementById('filter-categoria').value = '';
+        document.getElementById('filter-criticidade').value = '';
+        document.getElementById('filter-status').value = '';
+        document.getElementById('filter-dia').value = '';
+        document.getElementById('filter-tipo').value = '';
+        document.getElementById('search-input').value = '';
+
+        aplicarFiltros();
+    }
+
+    // Inicializar dashboard
+    document.addEventListener('DOMContentLoaded', async () => {
+        updateCurrentDate();
+
+        // Carregar dados do JSON
+        const dados = await carregarDados();
+
+        if (dados.length > 0) {
+            // Inicializar dados filtrados
+            filteredData = [...dados];
+
+            // Configurar eventos dos filtros
+            document.getElementById('filter-categoria').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-criticidade').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-status').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-dia').addEventListener('change', aplicarFiltros);
+            document.getElementById('filter-tipo').addEventListener('change', aplicarFiltros);
+            document.getElementById('search-input').addEventListener('input', aplicarFiltros);
+            document.getElementById('reset-filters').addEventListener('click', limparFiltros);
+
+            // Processar e exibir dados
+            atualizarDashboard();
+
+            // Esconder loading e mostrar conteúdo
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        }
+    });
+</script>
 </body>
 </html>

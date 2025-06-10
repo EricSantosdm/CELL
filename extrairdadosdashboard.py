@@ -47,7 +47,8 @@ def extract_data(driver, wait, buscar_xpath, next_button_xpath, retorno_id, tipo
     pg_total = get_pg_total(driver)
 
     # Definir as chaves esperadas para cada linha de dados
-    expected_keys = ['curso', 'cod', 'tempo', 'status', 'corretor', 'fila']
+    # A ordem é baseada na extração das 'col_' div's
+    expected_keys = ['curso', 'cod', 'tempo', 'status', 'corretor', 'fila'] # 'fila' ainda é extraída, mas não será usada como chave principal no JSON final
 
     num_pages_to_process = pg_total if pg_total > 0 else 1 # Processa pelo menos 1 página
 
@@ -68,11 +69,13 @@ def extract_data(driver, wait, buscar_xpath, next_button_xpath, retorno_id, tipo
                 if i < len(expected_keys):
                     row_dict[expected_keys[i]] = col_element.text.strip()
             
+            # Preencher chaves ausentes com string vazia para garantir a estrutura
             for key in expected_keys:
                 if key not in row_dict:
                     row_dict[key] = ""
             
-            row_dict['tipo'] = tipo
+            # Adicionar o 'tipo' explicitamente e converter para minúsculas
+            row_dict['tipo'] = tipo.lower()
             
             all_data.append(row_dict)
         
@@ -97,7 +100,7 @@ provas_data = extract_data(
     buscar_xpath="//input[@value='Buscar' and @onclick='pesquisar_provas();']",
     next_button_xpath="//input[@class='bt_next' and @onclick=\"pesquisar_provas('next');\"]",
     retorno_id="retorno_pesquisa",
-    tipo="Normal"
+    tipo="Normal" # Passa "Normal" para a função, será convertido para "normal"
 )
 
 # Extrair dados da aba "Excelência"
@@ -108,7 +111,7 @@ excelencia_data = extract_data(
     buscar_xpath="//input[@value='Buscar' and @onclick='pesquisar_excelencia();']",
     next_button_xpath="//input[@class='bt_next' and @onclick=\"pesquisar_excelencia('next');\"]",
     retorno_id="retorno_pesquisa",
-    tipo="Excelência"
+    tipo="Excelência" # Passa "Excelência" para a função, será convertido para "excelência"
 )
 
 # Mesclar os dados de ambas as abas
@@ -116,41 +119,27 @@ all_combined_data = provas_data + excelencia_data
 
 print(f"\nTotal de itens coletados (provas + excelência): {len(all_combined_data)}")
 
-# Transformar a lista de dicionários para o formato JSON desejado: { "chave_unica": { ... } }
-json_output = {}
+# Preparar a lista final de dicionários para o JSON
+final_json_list = []
 items_added_to_json = 0
-for i, item in enumerate(all_combined_data):
-    # Tenta usar 'fila' como chave. Se vazio, tenta 'cod'. Se ambos vazios, usa um índice.
-    key = item.get('fila', '').strip()
-    if not key: # Se 'fila' for vazia ou só espaços
-        key = item.get('cod', '').strip()
-        if not key: # Se 'cod' também for vazio
-            key = f"item_{i}" # Chave de fallback única baseada no índice
-            print(f"AVISO: Item {i} sem valor em 'fila' e 'cod'. Usando chave de fallback: '{key}'.")
-        else:
-            print(f"INFO: Item {i} sem valor em 'fila'. Usando 'cod' como chave: '{key}'.")
-    
-    # Converte 'tempo' para int. Se não for numérico, define como 0.
-    tempo_value = item.get('tempo', '')
-    try:
-        tempo_value = int(tempo_value)
-    except ValueError:
-        tempo_value = 0 # Define como 0 se não for um número válido ou vazio
 
+for item in all_combined_data:
+    # Apenas os campos solicitados na saída desejada
+    # 'fila' não é mais incluída no objeto final do JSON
+    
+    # Mantendo 'tempo' como string, como na sua saída desejada ("8 dias")
+    # Removendo a conversão para int que havia antes
+    
     formatted_item = {
         "curso": item.get('curso', ''),
         "cod": item.get('cod', ''),
-        "tempo": tempo_value,
+        "tempo": item.get('tempo', ''), # Manter como string original extraída
         "status": item.get('status', ''),
         "corretor": item.get('corretor', ''),
-        "tipo": item.get('tipo', '')
+        "tipo": item.get('tipo', '') # Já está em minúsculas da função extract_data
     }
     
-    # Adiciona o item ao JSON. Se a chave já existir, a entrada mais recente sobrescreve.
-    if key in json_output:
-        print(f"AVISO: Chave '{key}' duplicada encontrada. A entrada anterior será sobrescrita.")
-    
-    json_output[key] = formatted_item
+    final_json_list.append(formatted_item)
     items_added_to_json += 1
 
 print(f"Total de itens adicionados ao JSON: {items_added_to_json}")
@@ -158,7 +147,7 @@ print(f"Total de itens adicionados ao JSON: {items_added_to_json}")
 # Salvar os dados no arquivo JSON
 output_filename = 'dados.json'
 with open(output_filename, 'w', encoding='utf-8') as f:
-    json.dump(json_output, f, ensure_ascii=False, indent=4)
+    json.dump(final_json_list, f, ensure_ascii=False, indent=4)
 
 print(f"\nDados extraídos e salvos em '{output_filename}' no formato JSON.")
 
